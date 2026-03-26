@@ -1,8 +1,21 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+import DestinationIndex from "./components/DestinationIndex";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <h1>Travel Project</h1>
+    <div className="d-flex flex-column min-vh-100 bg-dark text-white">
+      <Header />
+      <main className="flex-grow-1 row">
+        <div className="col-12">
+          <DestinationIndex />
+        </div>
+      </main>
+
+      <Footer />
+    </div>
   </StrictMode>,
 );
