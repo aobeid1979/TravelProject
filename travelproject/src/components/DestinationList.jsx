@@ -1,7 +1,11 @@
 import { useGetAllDestinationQuery } from "../api/destinationApi";
+import { useDeleteDestinationMutation } from "../api/destinationApi";
+
 function DestinationList() {
   const { data, isSuccess, isLoading, isError, error } =
     useGetAllDestinationQuery();
+
+  const [deleteDestination] = useDeleteDestinationMutation();
 
   let content;
   if (isLoading) {
@@ -9,12 +13,20 @@ function DestinationList() {
   } else if (isSuccess) {
     content = data.map((destination) => {
       return (
-        <article key={destination.id}>
-          <div className="text-center text-info p-2">
-            {destination.city}, {destination.country} - {destination.daysNeeded}{" "}
-            days
+        <div className="row py-1 border-top" key={destination.id}>
+          <div className="col-5 offset-1">
+            {destination.city}, {destination.country}
           </div>
-        </article>
+          <div className="col-2 text-info">{destination.daysNeeded} days</div>
+          <div className="col-3">
+            <button
+              className="btn form-control btn-danger"
+              onClick={() => deleteDestination({ id: destination.id })}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
       );
     });
   } else if (isError) {

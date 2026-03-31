@@ -1,13 +1,22 @@
 import { useState } from "react";
+import { useAddDestinationMutation } from "../api/destinationApi";
 
 function AddDestination() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [addDestinationMutation, result] = useAddDestinationMutation();
 
   const handleAddDestination = (e) => {
     e.preventDefault();
     console.log("City: ", city);
     console.log("Country: ", country);
+
+    addDestinationMutation({
+      id: Math.random() * 100,
+      city: city,
+      country: country,
+      daysNeeded: parseInt(Math.random() * 10) + 1,
+    });
 
     setCity("");
     setCountry("");
@@ -36,7 +45,17 @@ function AddDestination() {
             />
           </div>
           <div className="col-2 p-1">
-            <button className="btn btn-success form-control">Add</button>
+            <button
+              onClick={() =>
+                addDestinationMutation({
+                  city,
+                  country,
+                })
+              }
+              className="btn btn-success form-control"
+            >
+              Add
+            </button>
           </div>
         </div>
       </form>
